@@ -85,5 +85,11 @@ const markAsRead = async(title,view) => {
 
 };
 
+handleSearch = () =>{
+    const src = document.getElementById('search');
+    console.log(src.value);
+    loadPosts(`posts?category=${src.value}`);
+}
+
 
 loadPosts('posts');
