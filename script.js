@@ -1,5 +1,5 @@
-const loadPosts = async () => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/posts`);
+const loadPosts = async (p) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/${p}`);
 
     const data = await res.json();
     const posts = data.posts;
@@ -37,7 +37,7 @@ const displayPosts = posts => {
                                     <span class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg> ${post.view_count}</span>
                                     <span class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.415L11 9.586V6z" clip-rule="evenodd" /></svg> ${post.posted_time} min</span>
                                 </div>
-                                <button class="btn btn-circle bg-green-100 border-none">
+                                <button onclick="markAsRead('${post.title}','${post.view_count}')" class="btn btn-circle bg-green-100 border-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                                 </button>
                             </div>
@@ -61,4 +61,29 @@ const displayPosts = posts => {
     }
 });
 };
-loadPosts();
+
+const markAsRead = async(title,view) => {
+    console.log(title);
+    console.log(view);
+
+    const mar_count = document.getElementById('mar_count');
+    const mar_counted = parseInt(mar_count.innerHTML) + 1;
+    console.log(mar_counted);
+    mar_count.innerHTML = `${mar_counted}`;
+
+
+    const mar = document.getElementById('mar');
+    const card = document.createElement('div');
+    card.classList = 'bg-white p-4 rounded-lg flex justify-between items-center';
+    card.innerHTML = `
+        <p class="font-semibold text-gray-800">${title}</p>
+        <span class="flex items-center gap-2 text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /></svg> ${view}</span> 
+    `;
+
+    mar.appendChild(card);
+
+
+};
+
+
+loadPosts('posts');
