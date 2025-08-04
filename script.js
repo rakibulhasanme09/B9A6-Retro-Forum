@@ -95,4 +95,50 @@ handleSearch = () =>{
 }
 
 
+const loadLatestPosts = async () => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/retro-forum/latest-posts`);
+
+    const data = await res.json();
+    // const posts = data.posts;
+    // console.log(data);
+    displayLatestPosts(data);
+}
+
+const displayLatestPosts = posts => {
+    const container = document.getElementById('latContainer');
+    container.textContent ='';
+    console.log(posts.length);
+
+    posts.forEach(post => {
+    const card = document.createElement('div');
+    card.classList = 'bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300';
+
+    
+    card.innerHTML = `<div> <div class="bg-gray-200 h-48 rounded-xl mb-6">
+        <img class="w-full h-full object-cover rounded-xl" src="${post.cover_image}" alt="Cover image for ${post.title}">
+    </div>
+    <div class="flex items-center text-sm text-gray-500 mb-3 gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">
+            ${post?.author?.posted_date || 'No publish date'}
+        </span>
+    </div>
+    <h3 class="text-xl font-bold text-gray-900 mb-3">${post.title}</h3>
+    <p class="text-gray-600 mb-6">${post.description}</p>
+</div>
+
+<div class="flex items-center mt-auto border-t pt-4">
+    <img src="${post?.profile_image}" alt="${post?.author?.name}" class="w-10 h-10 rounded-full mr-4">
+    <div>
+        <p class="font-semibold text-gray-800">${post?.author?.name}</p>
+        <p class="text-sm text-gray-500">${post?.author?.designation || 'Unknown'}</p>
+    </div>
+</div>`;
+        container.appendChild(card);
+});
+};
+
 loadPosts('posts');
+loadLatestPosts();
