@@ -1,12 +1,5 @@
 # B9A6-Retro-Forum
 
-
-## [ Private Repo Link](https://classroom.github.com/a/M685dkpe)
-
-Click here for the private repo: [https://classroom.github.com/a/M685dkpe](https://classroom.github.com/a/M685dkpe)
-
-
-
 # API
 
 LatestPosts: - https://openapi.programming-hero.com/api/retro-forum/latest-posts
